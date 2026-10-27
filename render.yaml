@@ -1,0 +1,17 @@
+# Un solo proceso: los grupos se conservan en memoria.
+services:
+  - type: web
+    name: kalenfolklore-sync
+    runtime: node
+    plan: free
+    numInstances: 1
+    buildCommand: npm ci --omit=dev
+    startCommand: npm start
+    healthCheckPath: /healthz
+    envVars:
+      - key: NODE_VERSION
+        value: 22.16.0
+      - key: NODE_ENV
+        value: production
+      - key: ALLOWED_ORIGINS
+        value: https://kalenfolklore.netlify.app

@@ -1,0 +1,11 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+  functions = "netlify/functions"
+
+[functions]
+  node_bundler = "esbuild"
+
+[build.environment]
+  NODE_VERSION = "22.16.0"
+# Definir VITE_SYNC_URL = "wss://<servidor-real>/sync" en Netlify antes de compilar.

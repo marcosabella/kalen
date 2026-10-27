@@ -1,0 +1,13 @@
+{
+  "checks": [
+    "Nueva canción abre pantalla independiente y vuelve al inicio",
+    "Repertorio abre pantalla independiente y vuelve al inicio",
+    "Biblioteca abre pantalla independiente y vuelve al inicio",
+    "Sincronizar abre pantalla independiente y vuelve al inicio",
+    "Ajustes abre pantalla independiente y vuelve al inicio",
+    "Guardar para offline abre pantalla independiente y vuelve al inicio",
+    "Editar y cancelar borrado",
+    "Borrado persistente de biblioteca y repertorio"
+  ],
+  "errors": []
+}

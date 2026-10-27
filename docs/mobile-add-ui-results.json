@@ -1,0 +1,24 @@
+[
+  {
+    "scenario": "HTTP móvil sin randomUUID",
+    "capabilities": {
+      "secure": false,
+      "randomUUID": "undefined"
+    },
+    "homeAdd": true,
+    "libraryAdd": true,
+    "persistentSongs": 2,
+    "errors": []
+  },
+  {
+    "scenario": "localhost móvil",
+    "capabilities": {
+      "secure": true,
+      "randomUUID": "function"
+    },
+    "homeAdd": true,
+    "libraryAdd": true,
+    "persistentSongs": 2,
+    "errors": []
+  }
+]

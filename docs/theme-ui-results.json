@@ -1,0 +1,18 @@
+{
+  "checks": [
+    {
+      "theme": "dark",
+      "src": "/kalen-oscuro-transparente.png",
+      "background": "rgba(0, 0, 0, 0)",
+      "footer": 0
+    },
+    {
+      "theme": "light",
+      "src": "/kalen-claro-transparente.png",
+      "background": "rgba(0, 0, 0, 0)",
+      "footer": 0
+    }
+  ],
+  "offlineBothLogos": true,
+  "errors": []
+}

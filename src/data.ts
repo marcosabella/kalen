@@ -1,0 +1,18 @@
+import { validateLibrary } from './domain.mjs';
+export type Song = { id: string; title: string; artist: string; lyrics: string; tonality?: string };
+export type Library = { songs: Song[]; order: string[] };
+const demo: Library = { songs: [
+{id:'demo-1',title:'Antes de salir',artist:'Letra de demostración · original',lyrics:'Bajo las luces de la ciudad\nse abre la noche para cantar.\nUn paso lento, una señal,\ny nuestras voces vuelven a empezar.\n\nESTRIBILLO\nQue suene fuerte esta canción,\nque encuentre sitio en tu corazón.\nHoy cada nota nos llevará\na ese lugar donde queremos estar.\n\nCuando el silencio quiera volver,\nqueda una historia por encender.\nLas manos marcan el compás,\ny nuestra música vuelve a empezar.\n\nESTRIBILLO\nQue suene fuerte esta canción,\nque encuentre sitio en tu corazón.\nHoy cada nota nos llevará\na ese lugar donde queremos estar.'},
+{id:'demo-2',title:'Un nuevo camino',artist:'Letra de demostración · original',lyrics:'Abro la puerta, empieza el día,\nllevo en el pecho una melodía.\nCruzo las calles sin preguntar,\ntodos los pasos me llevan al mar.\n\nESTRIBILLO\nVamos juntos, queda camino,\nque la canción nos encuentre vivos.\nVamos juntos, vuelve a cantar,\nsiempre hay un verso para empezar.'},
+{id:'demo-3',title:'La última luz',artist:'Letra de demostración · original',lyrics:'La última luz se queda aquí,\nentre las voces que conocí.\nAunque la noche llegue a su fin,\nguardo este encuentro dentro de mí.\n\nESTRIBILLO\nVuelve a sonar, vuelve a sonar,\nesta canción nos va a acompañar.\nVuelve a sonar, vuelve a sonar,\nmañana nos volveremos a encontrar.'}], order:['demo-1','demo-2','demo-3'] };
+export const emptyLibrary: Library = { songs: [], order: [] };
+function removeUnchangedDemos(data: Library): Library {
+ const removed = new Set(data.songs.filter(song => demo.songs.some(example => example.id === song.id && example.title === song.title && example.artist === song.artist && example.lyrics === song.lyrics)).map(song => song.id));
+ return removed.size ? { songs: data.songs.filter(song => !removed.has(song.id)), order: data.order.filter(id => !removed.has(id)) } : data;
+}
+function database(): Promise<IDBDatabase> {return new Promise((resolve,reject)=>{const r=indexedDB.open('repertorio-local',1); r.onupgradeneeded=()=>r.result.createObjectStore('library'); r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error);});}
+export async function loadLibrary(): Promise<Library | null> {const db=await database();return new Promise((resolve,reject)=>{const t=db.transaction('library');const r=t.objectStore('library').get('current');r.onsuccess=()=>resolve(validateLibrary(r.result)?removeUnchangedDemos(r.result):null);r.onerror=()=>reject(r.error);t.oncomplete=()=>db.close();});}
+export async function saveLibrary(data: Library) {const db=await database();return new Promise<void>((resolve,reject)=>{const t=db.transaction('library','readwrite');t.objectStore('library').put(data,'current');t.oncomplete=()=>{db.close();resolve();};t.onerror=()=>{db.close();reject(t.error);};t.onabort=()=>reject(t.error);});}
+
+export async function saveReceived(song: Song) {const db=await database();return new Promise<void>((resolve,reject)=>{const t=db.transaction('library','readwrite');t.objectStore('library').put(song,'received');t.oncomplete=()=>{db.close();resolve();};t.onerror=()=>{db.close();reject(t.error);};});}
+export async function loadReceived(): Promise<Song | null> {const db=await database();return new Promise((resolve,reject)=>{const t=db.transaction('library');const r=t.objectStore('library').get('received');r.onsuccess=()=>resolve(r.result||null);r.onerror=()=>reject(r.error);t.oncomplete=()=>db.close();});}

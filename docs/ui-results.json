@@ -1,0 +1,73 @@
+{
+  "browser": "Chromium",
+  "results": [
+    {
+      "name": "phone-portrait",
+      "noHorizontalOverflow": true,
+      "touch48": true,
+      "hideRestore": true,
+      "fontPersistence": true
+    },
+    {
+      "name": "phone-landscape",
+      "noHorizontalOverflow": true,
+      "touch48": true,
+      "hideRestore": true,
+      "fontPersistence": true
+    },
+    {
+      "name": "tablet-portrait",
+      "noHorizontalOverflow": true,
+      "touch48": true,
+      "hideRestore": true,
+      "fontPersistence": true
+    },
+    {
+      "name": "tablet-landscape",
+      "noHorizontalOverflow": true,
+      "touch48": true,
+      "hideRestore": true,
+      "fontPersistence": true
+    },
+    {
+      "name": "desktop",
+      "noHorizontalOverflow": true,
+      "touch48": true,
+      "hideRestore": true,
+      "fontPersistence": true
+    },
+    {
+      "name": "phone-small",
+      "noHorizontalOverflow": true,
+      "touch48": true,
+      "hideRestore": true,
+      "fontPersistence": true
+    },
+    {
+      "orientationAnchor": true,
+      "fontChangeAnchor": true
+    },
+    {
+      "wakeLockRejectedFallback": true
+    },
+    {
+      "offlineReload": true,
+      "offlineNavigation": true
+    },
+    {
+      "songPersistence": true,
+      "longWordWrap": true,
+      "autoScroll": true,
+      "manualPause": true
+    },
+    {
+      "syncTwoDevices": true,
+      "independentFont": true,
+      "independentTheme": true,
+      "independentSpeed": true,
+      "syncStanza": true,
+      "receivedSongOffline": true
+    }
+  ],
+  "errors": []
+}

@@ -1,0 +1,20 @@
+{
+  "checks": [
+    "Botones cuadrados 320×568",
+    "Botones cuadrados 390×844",
+    "Botones cuadrados 844×390",
+    "Botones cuadrados 768×1024",
+    "Botones cuadrados 1024×768",
+    "Botones cuadrados 1440×900",
+    "Autocompletado por título",
+    "Letra guardada después de recargar",
+    "Elección de artista/versiones",
+    "Protección de letra existente",
+    "Respuesta tardía no pisa texto manual",
+    "Sin resultados",
+    "Alternativa manual sin conexión"
+  ],
+  "errors": [],
+  "provider": "LRCLIB simulado para pruebas deterministas",
+  "calls": 5
+}
