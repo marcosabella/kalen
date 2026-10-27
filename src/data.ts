@@ -1,5 +1,6 @@
 import { validateLibrary } from './domain.mjs';
-export type Song = { id: string; title: string; artist: string; lyrics: string; tonality?: string };
+export type LyricFormat = {start:number;end:number;bold?:boolean;italic?:boolean;underline?:boolean;color?:string};
+export type Song = { id: string; title: string; artist: string; lyrics: string; tonality?: string; lyricFormats?: LyricFormat[] };
 export type Library = { songs: Song[]; order: string[] };
 const demo: Library = { songs: [
 {id:'demo-1',title:'Antes de salir',artist:'Letra de demostración · original',lyrics:'Bajo las luces de la ciudad\nse abre la noche para cantar.\nUn paso lento, una señal,\ny nuestras voces vuelven a empezar.\n\nESTRIBILLO\nQue suene fuerte esta canción,\nque encuentre sitio en tu corazón.\nHoy cada nota nos llevará\na ese lugar donde queremos estar.\n\nCuando el silencio quiera volver,\nqueda una historia por encender.\nLas manos marcan el compás,\ny nuestra música vuelve a empezar.\n\nESTRIBILLO\nQue suene fuerte esta canción,\nque encuentre sitio en tu corazón.\nHoy cada nota nos llevará\na ese lugar donde queremos estar.'},

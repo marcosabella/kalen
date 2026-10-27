@@ -41,7 +41,7 @@ test('WebSocket acepta Kalen, rechaza otro origen y sincroniza dos dispositivos'
   t.after(() => follower.terminate());
   const followerStatus = await message(follower, m => m.type==='status');
   assert.equal(followerStatus.role, 'follower'); assert.equal(followerStatus.peers, 2);
-  const cue = {song:{id:'test',title:'Prueba',artist:'Kalen',lyrics:'Primera estrofa\n\nSegunda estrofa'},stanza:1,fraction:0.5};
+  const cue = {song:{id:'test',title:'Prueba',artist:'Kalen',lyrics:'Primera estrofa\n\nSegunda estrofa',lyricFormats:[{start:0,end:7,bold:true,color:'#ff0000'}]},stanza:1,fraction:0.5};
   const received = message(follower, m => m.type==='cue');
   leader.send(JSON.stringify({type:'cue',cue}));
   assert.deepEqual((await received).cue, cue);

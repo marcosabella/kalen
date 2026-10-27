@@ -55,6 +55,8 @@ Inicio muestra solo el tablero de botones cuadrados. Cada acción abre una panta
 
 ## Búsqueda automática de letras
 
+El editor muestra siempre el texto y los códigos de acordes. Seleccioná palabras y usá la barra para aplicar negrita, cursiva, subrayado o color; Quitar formato limpia la selección. También acepta Ctrl/Cmd+B, I y U. El resultado aparece en la vista previa y en el escenario. El formato se guarda con la canción, se incluye en las copias JSON y se comparte por sincronización. Las canciones anteriores siguen funcionando sin cambios.
+
 En Nueva canción, escribir un título de al menos tres caracteres inicia la búsqueda tras 900 ms sin cambios. Artista es opcional. Una coincidencia exacta y única carga la letra; varias versiones requieren elegir. Buscar ahora permite reintentar o buscar desde una canción existente. Una letra ya escrita nunca se reemplaza sin confirmación, y una respuesta tardía no pisa una edición manual. Las letras guardadas permanecen disponibles offline; la búsqueda necesita Internet.
 
 Proveedor: [LRCLIB](https://lrclib.net/docs), consultado directamente desde navegador. Se identifica el cliente, se espacian solicitudes y se respeta Retry-After. No necesita configuración de claves. La conexión real al proveedor no pudo comprobarse desde el entorno de desarrollo; los flujos se validaron con respuestas controladas.

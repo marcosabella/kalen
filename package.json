@@ -13,7 +13,10 @@
     "test:lyrics-ui": "node scripts/test-lyrics-ui.mjs",
     "test:navigation-ui": "node scripts/test-navigation-ui.mjs",
     "test:mobile-add-ui": "node scripts/test-mobile-add-ui.mjs",
-    "configure:sync": "node scripts/configure-sync.mjs"
+    "configure:sync": "node scripts/configure-sync.mjs",
+    "package:local": "node scripts/package-local.mjs",
+    "setup:local:https": "node scripts/setup-local-https.mjs",
+    "start:local:https": "node scripts/start-local-https.mjs"
   },
   "dependencies": {
     "react": "18.3.1",

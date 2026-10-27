@@ -1,0 +1,37 @@
+KALEN - SERVIDOR LOCAL PARA WINDOWS (64 BITS)
+
+No requiere VS Code, npm ni instalar Node.js. El runtime viene incluido.
+
+1. Descomprimi TODO el ZIP en una carpeta de tu PC.
+2. Conecta la PC y los celulares/tablets al mismo router o Wi-Fi.
+   La red puede funcionar sin Internet. Evita redes de invitados que aislen equipos.
+3. Hace doble clic en INICIAR-KALEN.cmd dentro de la carpeta descomprimida.
+4. Si Windows solicita acceso a la red, permite Node.js en redes privadas.
+5. Se abrira Kalen en el navegador de la PC.
+6. La ventana del servidor muestra una o mas direcciones http://...:4173.
+   En los celulares/tablets, abri la direccion de la conexion Wi-Fi o Ethernet
+   de la PC. No uses localhost en esos otros dispositivos.
+7. Crea un grupo en el dispositivo Director y uni los Seguidores con el mismo codigo.
+
+DEJAR ENCENDIDA LA PC
+La ventana debe quedar abierta. Evita que la PC entre en suspension.
+Para detener el servidor: Ctrl+C. Si pregunta confirmar, responde S.
+Si reinicias el servidor, vuelve a crear el grupo y a unir los dispositivos.
+La direccion IP puede cambiar cuando cambias de red: consulta la ventana otra vez.
+
+SIN INTERNET
+La sincronizacion local no usa Render ni Netlify. Todos deben abrir la direccion
+local; la app publicada en Netlify sigue usando el servidor de Internet.
+La busqueda de letras/acordes en Internet requiere conexion. Prepara las canciones
+antes del show. Los datos guardados en Netlify no aparecen automaticamente en
+esta direccion: usa Exportar/Importar de la biblioteca para llevar el repertorio.
+Cada navegador/direccion mantiene sus propios datos. Guarda copias de tu biblioteca.
+
+SI UN CELULAR NO CONECTA
+Comprueba que use el mismo router, que la IP sea la de Wi-Fi/Ethernet de la PC,
+que la red no aisle clientes y que el firewall permita Node.js en redes privadas.
+En este modo se usa HTTP local: instalar como PWA y mantener la pantalla encendida
+pueden no estar disponibles en algunos navegadores. Mantene la pantalla activa
+desde los ajustes del dispositivo.
+
+Incluye Node.js para Windows x64 y ws, con sus licencias dentro del paquete.

@@ -5,3 +5,7 @@ dist/
 test-results/
 
 .netlify/
+
+releases/
+.tmp-lock-repair/
+.local-https/
