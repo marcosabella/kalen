@@ -9,3 +9,5 @@ test-results/
 releases/
 .tmp-lock-repair/
 .local-https/
+.tmp-musicos-changes/
+.tmp-musicos-tools.mjs

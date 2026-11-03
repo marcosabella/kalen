@@ -30,9 +30,15 @@ No se fuerza la orientación. La interfaz contempla safe-area-inset y altura din
 
 ## Sincronización
 
+La misma app instalada desde Netlify permite elegir **Internet** o **Notebook** en Sincronizar. Recuerda ambas conexiones y el modo elegido en cada dispositivo. El director prepara una sola vez la confianza del certificado y la dirección local de cada tablet; los músicos solo eligen el modo y el código del grupo. Para Notebook, generar el paquete portable con `npm run package:local:https` y ejecutar `INICIAR-KALEN-HTTPS.cmd`. La guía del paquete explica Android, iPad y Windows. No se necesita otra instalación de Kalen. Ver [guía local HTTPS](docs/GUIA-SERVIDOR-LOCAL-HTTPS.txt).
+
+Para confianza sin vencimiento práctico, `npm run package:local:permanent` genera un paquete separado con autoridad de confianza válida hasta 31/12/9999. El certificado TLS del servidor conserva un plazo inferior a 825 días para compatibilidad con iPad y se renueva automáticamente al iniciar sin cambiar la confianza instalada. Cada notebook genera sus claves al primer inicio. Usar una carpeta nueva e instalar ese certificado una vez en cada tablet; se conservan las autoridades existentes de los otros paquetes. La notebook puede actuar solo como servidor: el cantante crea el grupo primero desde su tablet. Ver [guía del paquete permanente](docs/GUIA-SERVIDOR-LOCAL-PERMANENTE.txt).
+
 Abrir Sincronizar y Crear grupo en el dispositivo director. Compartir su código; los demás ingresan el mismo servidor y código y eligen Unirme. El primer dispositivo del grupo dirige. Se comparte la canción completa y la estrofa actual; nunca se envían preferencias visuales. Desactivar Seguir al director permite lectura y navegación independientes.
 
 La canción recibida se guarda separadamente para recuperar su lectura sin red. Las preferencias se guardan en localStorage y la biblioteca/canción recibida en IndexedDB. El servidor conserva el grupo en memoria; no es un backend de cuentas ni almacenamiento permanente. Al perder conexión se mantiene la lectura local; Unirme permite reconectar. Si sale el director, los seguidores quedan esperando: no toman automáticamente el control.
+
+En Sincronizar, **Recibir formato de las canciones** permite a cada músico conservar los colores, negrita, cursiva y subrayado del director o leer sin esos estilos. Está activado por defecto y se recuerda en ese dispositivo, tanto para Internet como para Notebook. Se puede cambiar durante la lectura y también sobre la canción recibida guardada sin conexión. El original conserva el formato para poder volver a activarlo; la biblioteca propia y los demás músicos mantienen sus estilos.
 
 El código es la clave de acceso al grupo. Se puede elegir uno de al menos 4 caracteres antes de tocar Crear grupo; si el campo está vacío, la aplicación genera uno de 6 caracteres. No hay historial de grupos ni usuarios. Para un despliegue público se debe definir además la política de autenticación y operación.
 

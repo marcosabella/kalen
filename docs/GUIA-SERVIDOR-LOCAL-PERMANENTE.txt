@@ -1,0 +1,54 @@
+KALEN - SERVIDOR HTTPS SIN VENCIMIENTO PRACTICO
+
+El certificado de confianza que instalas en las tablets vale hasta el 31/12/9999.
+Es la fecha prevista por RFC 5280 para certificados sin caducidad definida.
+https://www.rfc-editor.org/rfc/rfc5280.html#section-4.1.2.5
+No es un certificado para un solo dia ni necesita reinstalarse por fecha de show.
+El certificado interno del servidor tiene un plazo compatible con Android e iPad.
+Se renueva automaticamente al iniciar, conservando la misma confianza de las tablets.
+
+PREPARAR LA NOTEBOOK
+1. Detene el servidor anterior con Ctrl+C.
+2. Descomprimi ESTE ZIP completo en una carpeta NUEVA de la notebook.
+   No lo mezcles con carpetas anteriores que tengan otro certificado.
+3. Ejecuta INICIAR-KALEN-HTTPS.cmd. No hace falta instalar Node.js ni npm.
+4. La primera vez genera certificados propios de esta notebook, sin Internet.
+   No instala nada automaticamente en el almacen de confianza de Windows.
+5. Deja esta ventana abierta. Notebook y tablets deben usar el mismo router/Wi-Fi.
+
+PREPARAR CADA TABLET/CELULAR, INCLUIDA LA DEL CANTANTE
+1. Abri en su navegador la direccion de preparacion que muestra la consola,
+   por ejemplo http://192.168.36.126:4180/.
+2. Descarga e instala el NUEVO certificado de este paquete. La pagina explica
+   Android e iPad. Hace falta este paso una vez, aunque instalaras el anterior.
+3. Comproba el enlace seguro desde esa pagina: debe abrir sin advertencias.
+4. Abri la app Kalen YA instalada desde Netlify.
+5. Sincronizar > Notebook > Configurar conexion.
+   En Direccion de la notebook, guarda wss://192.168.36.126:4174/sync,
+   usando la IP real que muestra la consola. Si el campo se llama Servidor de
+   sincronizacion, usa la MISMA direccion wss://. Copiala SIN punto al final.
+6. Si pide permiso para la red local, elegi Permitir.
+
+EL CANTANTE DIRIGE DESDE SU TABLET
+- El cantante abre Sincronizar > Notebook y toca Crear grupo PRIMERO.
+- Los musicos ingresan ese mismo codigo y tocan Unirme.
+- La notebook puede quedar SOLO COMO SERVIDOR. No necesita crear ni unirse al grupo.
+- El certificado no determina quien dirige: dirige el primero que entra al grupo.
+- No hace falta instalar otra app ni volver a publicar en Netlify para este cambio.
+
+CONSERVAR EL CERTIFICADO
+- Usa siempre la misma carpeta de este paquete en ESTA notebook.
+- Conserva .local-https: contiene las claves que mantienen la confianza de las tablets.
+  No la borres, copies a otras notebooks ni distribuyas a los musicos.
+- Si cambia la IP, al iniciar se adapta el certificado del servidor conservando
+  la misma confianza. Si cambio la direccion, actualizala en las tablets.
+  Reservar una IP para la notebook en el router evita este cambio.
+- Para otra notebook, descomprimi de nuevo el ZIP original: generara sus propias claves.
+- Que un certificado no venza no impide revocar su confianza: podes quitarlo desde
+  los ajustes del dispositivo cuando dejes de usar esta notebook.
+
+La app ya instalada debe haberse abierto/actualizado con Internet antes del show
+para tener sus recursos offline. La sincronizacion Notebook funciona sin Internet.
+Ver GUIA-CONEXION.txt para detalles de red, permisos y opciones de formato.
+
+Incluye Node.js Windows x64, ws y node-forge, con sus licencias.

@@ -1,5 +1,15 @@
 import test from 'node:test';import assert from 'node:assert/strict';import {normalizePreferences,applyCue,validateLibrary,stanzaList} from '../src/domain.mjs';
 const song={id:'s',title:'Una canción',artist:'Músico',lyrics:'Estrofa uno\nsegunda línea\n\nEstribillo'};
+test('formato sincronizado conserva compatibilidad y permite preferencias independientes',()=>{
+ assert.equal(normalizePreferences({}).syncFormatting,true);
+ assert.equal(normalizePreferences({syncFormatting:'no'}).syncFormatting,true);
+ const styled={prefs:normalizePreferences({syncFormatting:true})};
+ const plain={prefs:normalizePreferences({syncFormatting:false})};
+ const cue={song:{...song,lyricFormats:[{start:0,end:7,bold:true,color:'#ff0000'}]},stanza:1};
+ assert.equal(applyCue(styled,cue).prefs.syncFormatting,true);
+ assert.equal(applyCue(plain,cue).prefs.syncFormatting,false);
+ assert.deepEqual(applyCue(plain,cue).song.lyricFormats,cue.song.lyricFormats);
+});
 test('dos dispositivos conservan preferencias diferentes al recibir la misma canción',()=>{const cue={song,stanza:1};const a={prefs:normalizePreferences({fontSize:48,speed:8}),song:null};const b={prefs:normalizePreferences({fontSize:20,speed:70,highContrast:false}),song:null};assert.deepEqual(applyCue(a,cue).prefs,a.prefs);assert.deepEqual(applyCue(b,cue).prefs,b.prefs);assert.equal(applyCue(a,cue).song.id,applyCue(b,cue).song.id);});
 test('preferencias dañadas o fuera de rango tienen valores legibles',()=>{assert.equal(normalizePreferences({fontSize:200}).fontSize,64);assert.equal(normalizePreferences({fontSize:NaN}).fontSize,26);assert.equal(normalizePreferences({fontSize:0}).fontSize,18);assert.equal(normalizePreferences({lineHeight:0}).lineHeight,1.2);assert.equal(normalizePreferences({fontSize:32}).fontSize,32);});
 test('importación rechaza referencias rotas y duplicados',()=>{assert.ok(validateLibrary({songs:[song],order:['s']}));assert.equal(validateLibrary({songs:[song],order:['otro']}),false);assert.equal(validateLibrary({songs:[song,song],order:['s']}),false);assert.equal(validateLibrary({songs:[song],order:['s','s']}),false);});

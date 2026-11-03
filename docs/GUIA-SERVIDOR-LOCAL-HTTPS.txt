@@ -1,0 +1,71 @@
+KALEN - NOTEBOOK LOCAL HTTPS PARA LA MISMA APP DE NETLIFY
+
+Los musicos conservan la aplicacion que ya instalaron desde Netlify.
+No necesitan instalar otra app. La misma biblioteca y los ajustes se conservan.
+La app debe tener la actualizacion con las opciones Internet y Notebook.
+
+EN LA NOTEBOOK DEL DIRECTOR
+1. Descomprimi TODO el ZIP en una carpeta propia de esta notebook.
+   No requiere instalar Node.js, npm ni VS Code.
+2. Conecta la notebook al router del show, junto con las tablets.
+3. Hace doble clic en INICIAR-KALEN-HTTPS.cmd.
+4. Si Windows pregunta, permite Node.js en redes privadas.
+5. La primera vez se crea el certificado de ESTA notebook, sin Internet.
+   Se abre una pagina de ayuda. La consola muestra las direcciones para las tablets.
+6. Deja la ventana abierta y evita la suspension de la notebook.
+
+PREPARACION UNICA DE CADA TABLET (LA HACE EL DIRECTOR)
+1. En su navegador, abri http://IP-DE-LA-NOTEBOOK:4180.
+   Usa la direccion real que muestra la consola, no localhost.
+2. Segui la ayuda para descargar e instalar el certificado en Android o iPad.
+   El certificado debe ser el de esta notebook; compara la huella con la consola.
+3. Comproba el enlace de conexion segura. Debe abrir sin advertencias.
+4. Abri la app Kalen que YA estaba instalada desde Netlify.
+5. Sincronizar > Notebook > Configurar conexion.
+6. En Direccion de la notebook, escribi wss://IP-DE-LA-NOTEBOOK:4174/sync.
+   Si tu pantalla dice Servidor de sincronizacion, usa esa MISMA direccion wss://.
+   Copia completa la que muestra el iniciador, sin espacios ni punto al final.
+   Queda guardada en la app actualizada.
+7. Si la app solicita permiso de acceso a la red local, permitilo.
+8. Cerra Configurar conexion. No hace falta instalar una segunda aplicacion.
+
+PARA NO CONFUNDIR LAS DIRECCIONES
+- http://IP:4180/ va en el NAVEGADOR para instalar el certificado.
+- https://IP:4174/healthz va en el NAVEGADOR para comprobar la conexion segura.
+- wss://IP:4174/sync va DENTRO DE KALEN para sincronizar tablet/celular.
+  Se acepta tanto en Servidor de sincronizacion como en Direccion de la notebook.
+  Escribi /sync al final, SIN el punto de una frase.
+
+PARA LOS MUSICOS, EN CADA SHOW
+1. Abrir su Kalen de siempre y entrar a Sincronizar.
+2. Elegir Notebook para tocar por Wi-Fi sin Internet, o Internet para tocar online.
+3. El director crea el grupo. Los demas escriben el mismo codigo y tocan Unirme.
+4. Todos deben elegir el mismo modo. Se recuerda el modo y la direccion en cada app.
+5. Cada musico puede activar o desactivar Recibir formato de las canciones.
+   Activado conserva colores, negrita, cursiva y subrayado del director.
+   Desactivado muestra la letra sin esos estilos. La eleccion queda guardada
+   en su dispositivo y no modifica la lectura de los demas musicos.
+
+PARA EL DIRECTOR
+- Tambien puede usar la app de Netlify en la notebook: preparar el certificado
+  de Windows siguiendo la ayuda y configurar la misma direccion de Notebook.
+- Abrir la app instalada antes del show para que haya descargado su actualizacion
+  y sus recursos offline cuando todavia hay Internet.
+- La sincronizacion local funciona sin Internet, con notebook y router encendidos.
+  Buscar letras nuevas y sincronizar por Internet si necesitan Internet.
+- Reservar una IP fija a la notebook en el router evita reconfigurar las tablets.
+  Si cambia la IP, reinicia el servidor y actualiza la direccion en cada app.
+- El certificado se renueva al iniciar si hace falta para la IP actual, conservando
+  la misma autoridad de confianza: no hay que reinstalarla por ese cambio.
+- Conserva la carpeta .local-https de ESTA notebook entre reinicios/actualizaciones.
+  Contiene sus claves privadas. No la copies ni la distribuyas a los musicos.
+  Para otra notebook usa una copia nueva del ZIP original.
+- Cada tablet necesita guardar para offline la app de Netlify antes de quedar sin
+  Internet. El servidor local no reemplaza esa preparacion.
+
+SI NO CONECTA
+Verifica mismo router, red sin aislamiento de clientes, firewall en redes privadas,
+ventana del servidor abierta, certificado confiable y permiso de red local.
+No alcanza con saltar una advertencia de certificado: debe ser confiable.
+
+Incluye Node.js Windows x64, ws y mkcert con sus licencias.

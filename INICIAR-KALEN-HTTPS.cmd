@@ -2,10 +2,12 @@
 setlocal
 cd /d "%~dp0"
 title Kalen - Servidor local HTTPS
-if not exist ".local-https\server.pem" (
-  echo Primero ejecuta npm run setup:local:https desde la carpeta del proyecto.
-  pause
-  exit /b 1
+if exist "runtime\node.exe" (
+  set "KALEN_LOCAL_DIST=%~dp0dist"
+  "runtime\node.exe" "scripts\start-local-https.mjs"
+) else (
+  node "scripts\start-local-https.mjs"
 )
-node scripts\start-local-https.mjs
+echo.
+echo El servidor se detuvo. Podes cerrar esta ventana.
 pause
