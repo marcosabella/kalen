@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { initialSyncConnection, notebookEndpoint } from '../src/sync-connection.mjs';
+import { defaultInternetEndpoint, initialSyncConnection, notebookEndpoint } from '../src/sync-connection.mjs';
 
 test('la misma app separa Internet y Notebook y recuerda ambos al reiniciar',()=>{
  const page=new URL('https://kalenfolklore.netlify.app');
@@ -15,6 +15,17 @@ test('acepta la direccion mostrada por la notebook o solo su IP',()=>{
  for(const address of ['192.168.1.10','192.168.1.10:4174','https://192.168.1.10:4174/','wss://192.168.1.10:4174/sync'])assert.equal(notebookEndpoint(address),'wss://192.168.1.10:4174/sync');
  assert.equal(notebookEndpoint(''),'');
  for(const address of ['http://192.168.1.10:4173','https://user:pass@192.168.1.10','https://192.168.1.10/#x','https://192.168.1.10/?room=demo','https://192.168.1.10/ruta'])assert.throws(()=>notebookEndpoint(address));
+});
+test('Internet viene preparado con Render tambien en la app local y recupera campos vacios',()=>{
+ const page=new URL('https://192.168.36.126:4174');
+ for(const saved of [null,{mode:'internet',internet:''},{mode:'internet',internet:'   '}]) {
+  const connection=initialSyncConnection(page,'',saved);
+  assert.equal(connection.internet,defaultInternetEndpoint);
+  assert.equal(connection.notebook,page.origin);
+ }
+ assert.equal(initialSyncConnection(page).mode,'notebook');
+ const custom='wss://otro.example/sync';
+ assert.equal(initialSyncConnection(page,'',{internet:custom}).internet,custom);
 });
 test('configuracion dañada no bloquea el inicio ni cambia al servidor inseguro',()=>{
  const page=new URL('https://kalenfolklore.netlify.app');

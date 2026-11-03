@@ -43,7 +43,7 @@ try {
   const html = await page.text();
   const script = html.match(/src="([^"]+\.js)"/)[1];
   const js = await (await fetch(origin + script)).text();
-  assert(!js.includes('kalen-1a98.onrender.com'), 'El paquete todavia usa Render');
+  assert(js.includes('kalen-1a98.onrender.com'), 'Falta la direccion predeterminada para la opcion Internet');
   const room = 'portable-' + Date.now();
   const url = 'ws://' + host + ':4173/sync?room=' + room;
   const leader = new WebSocket(url, { origin }); sockets.push(leader);
@@ -58,7 +58,7 @@ try {
   const late = new WebSocket(url, { origin }); sockets.push(late);
   assert.deepEqual((await message(late, m => m.type === 'cue')).cue, cue);
   assert(logs.includes('KALEN - SERVIDOR LOCAL'));
-  console.log('OK: runtime portable, inicio desde otra carpeta, HTTP por IP local, build sin Render, Director/Seguidor, cancion, estrofa y desplazamiento, seguidor tardio.');
+  console.log('OK: runtime portable, inicio desde otra carpeta, HTTP por IP local, opcion Internet con Render, Director/Seguidor, cancion, estrofa y desplazamiento, seguidor tardio.');
 } finally {
   for (const socket of sockets) socket.terminate();
   launcher.kill();

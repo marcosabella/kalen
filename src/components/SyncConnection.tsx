@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { connectionStorageKey, initialSyncConnection, notebookEndpoint } from '../sync-connection.mjs';
+import { connectionStorageKey, defaultInternetEndpoint, initialSyncConnection, notebookEndpoint } from '../sync-connection.mjs';
 import { defaultSyncEndpoint } from '../sync-config.mjs';
 
 export function useSyncConnection() {
@@ -17,16 +17,13 @@ export default function SyncConnection({settings,onSwitch}:{settings:ReturnType<
  const notebook=connection.mode==='notebook';
  return <>
   <fieldset className="theme-setting"><legend>¿Cómo van a tocar?</legend><div className="theme-options">
-   <button className="theme-choice" aria-pressed={!notebook} onClick={()=>{if(notebook){onSwitch();setConnection(c=>({...c,mode:'internet'}));}}}>Internet</button>
+   <button className="theme-choice" aria-pressed={!notebook} onClick={()=>{if(notebook||!connection.internet.trim()){onSwitch();setConnection(c=>({...c,mode:'internet',internet:c.internet.trim()||import.meta.env.VITE_SYNC_URL||defaultInternetEndpoint}));}}}>Internet</button>
    <button className="theme-choice" aria-pressed={notebook} onClick={()=>{if(!notebook){onSwitch();setConnection(c=>({...c,mode:'notebook'}));}}}>Notebook</button>
   </div></fieldset>
-  <p className="hint">{notebook?'Todos conectados al Wi-Fi de la notebook o del mismo router. Funciona sin Internet.':'Todos usan la conexión a Internet.'} Elijan la misma opción y el mismo código de grupo.</p>
-  {notebook&&<p className="hint">Si Kalen pide permiso para acceder a la red local, elegí Permitir para conectar con la notebook.</p>}
   {notebook&&!connection.notebook&&<p role="status">Falta vincular esta tablet con la notebook. Pedile al director que la configure una vez.</p>}
   <button type="button" aria-expanded={configure} onClick={()=>setConfigure(v=>!v)}>{configure?'Cerrar configuración':'Configurar conexión'}</button>
   {configure&&<div className="connection-config">
-   {notebook?<><label className="field">Dirección de la notebook<input value={connection.notebook} onChange={e=>{onSwitch();setConnection(c=>({...c,notebook:e.target.value}));}} placeholder="https://192.168.1.10:4174" autoCapitalize="none" autoCorrect="off" spellCheck={false}/></label><p className="hint">El director prepara el certificado una sola vez en esta tablet y copia la dirección que muestra INICIAR-KALEN-HTTPS. La aplicación recuerda la notebook.</p></>:<label className="field">Servidor de sincronización<input value={connection.internet} onChange={e=>{onSwitch();setConnection(c=>({...c,internet:e.target.value}));}} placeholder="wss://tu-servidor/sync" autoCapitalize="none" autoCorrect="off" spellCheck={false}/></label>}
-   <p className="hint">{notebook?'Si cambian de router y cambia la dirección de la notebook, el director debe actualizarla.':'La dirección de Internet viene preparada con la aplicación.'}</p>
+   {notebook?<label className="field">Dirección de la notebook<input value={connection.notebook} onChange={e=>{onSwitch();setConnection(c=>({...c,notebook:e.target.value}));}} placeholder="https://192.168.1.10:4174" autoCapitalize="none" autoCorrect="off" spellCheck={false}/></label>:<label className="field">Servidor de sincronización<input value={connection.internet} onChange={e=>{onSwitch();setConnection(c=>({...c,internet:e.target.value}));}} placeholder="wss://tu-servidor/sync" autoCapitalize="none" autoCorrect="off" spellCheck={false}/></label>}
   </div>}
   {error&&<p role="status">{error}</p>}{storageError&&<p role="status">Este navegador no permite recordar la conexión. Mantené abierta la aplicación.</p>}
  </>;

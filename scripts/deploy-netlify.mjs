@@ -8,10 +8,23 @@ const site=await api('/sites/'+siteId);if(site.name!=='kalenfolklore')throw Erro
 const files={},byHash=new Map();
 async function walk(dir,prefix=''){for(const entry of await readdir(dir,{withFileTypes:true})){const local=path.join(dir,entry.name),remote=prefix+'/'+entry.name;if(entry.isDirectory())await walk(local,remote);else {const bytes=await readFile(local),hash=createHash('sha1').update(bytes).digest('hex');files[remote]=hash;byHash.set(hash,{remote,bytes});}}}
 await walk('dist');const fn=await readFile('.netlify/functions-build/chords.zip');const sha=createHash('sha256').update(fn).digest('hex');
-const deploy=await api('/sites/'+siteId+'/deploys',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({draft:true,files,functions:{chords:sha},title:'Letras con acordes automáticos y limpieza de transcripciones'})});
+const deploy=await api('/sites/'+siteId+'/deploys',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({draft:true,files,functions:{chords:sha},title:'Sincronización simplificada y dirección de Internet automática'})});
 await mkdir('.netlify',{recursive:true});await writeFile('.netlify/state.json',JSON.stringify({siteId},null,2));await writeFile('.netlify/last-deploy.json',JSON.stringify({id:deploy.id,siteId,url:deploy.deploy_ssl_url||deploy.deploy_url},null,2));
 console.log(JSON.stringify({deployId:deploy.id,state:deploy.state,files:deploy.required?.length,functions:deploy.required_functions?.length,url:deploy.deploy_ssl_url||deploy.deploy_url}));
 const uploads=(deploy.required||[]).map(hash=>async()=>{const file=byHash.get(hash);if(!file)throw Error('Falta archivo '+hash);await api('/deploys/'+deploy.id+'/files'+file.remote.split('/').map(encodeURIComponent).join('/'),{method:'PUT',headers:{'Content-Type':'application/octet-stream'},body:file.bytes});});
 for(let i=0;i<uploads.length;i+=4)await Promise.all(uploads.slice(i,i+4).map(f=>f()));
 if(deploy.required_functions?.includes(sha))await api('/deploys/'+deploy.id+'/functions/chords?runtime=js',{method:'PUT',headers:{'Content-Type':'application/octet-stream'},body:fn});
 const status=await api('/deploys/'+deploy.id);console.log(JSON.stringify({deployId:status.id,state:status.state,url:status.deploy_ssl_url||status.deploy_url,error:status.error_message}));
+if(process.argv.includes('--prod')) {
+ let ready=status;
+ for(let attempt=0;ready.state!=='ready'&&attempt<30;attempt++) {
+  if(ready.state==='error'||ready.error_message)throw Error('Falló el despliegue: '+ready.error_message);
+  await new Promise(resolve=>setTimeout(resolve,1000));
+  ready=await api('/deploys/'+deploy.id);
+ }
+ if(ready.state!=='ready')throw Error('El despliegue todavía no está listo para publicar.');
+ await api('/sites/'+siteId+'/deploys/'+deploy.id+'/restore',{method:'POST'});
+ const published=await api('/sites/'+siteId);
+ if(published.published_deploy?.id!==deploy.id)throw Error('No se confirmó la publicación del despliegue esperado.');
+ console.log(JSON.stringify({published:true,deployId:deploy.id,url:published.ssl_url}));
+}

@@ -1,6 +1,7 @@
 import { validateSyncEndpoint } from './sync-config.mjs';
 
 export const connectionStorageKey='kalen-sync-connection-v1';
+export const defaultInternetEndpoint='wss://kalen-1a98.onrender.com/sync';
 
 export function notebookEndpoint(address) {
  const text=address.trim();
@@ -21,7 +22,7 @@ export function notebookEndpoint(address) {
  */
 export function initialSyncConnection(page,configured='',saved=null) {
  const remote=page.hostname.endsWith('.netlify.app');
- const initial={mode:remote?'internet':'notebook',internet:configured,notebook:remote?'':page.origin};
+ const initial={mode:remote?'internet':'notebook',internet:configured.trim()||defaultInternetEndpoint,notebook:remote?'':page.origin};
  if(saved&&typeof saved==='object') {
   if('mode' in saved&&['internet','notebook'].includes(String(saved.mode)))initial.mode=String(saved.mode);
   if('internet' in saved&&typeof saved.internet==='string') {try{initial.internet=validateSyncEndpoint(saved.internet,page.protocol).href;}catch{}}
